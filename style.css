@@ -1,0 +1,58 @@
+html, body {
+	margin: 0;
+}
+
+h1 {
+	margin: 20px auto;
+}
+
+main {
+	background-color: #FDF6E3;
+	margin-bottom: 20px;
+}
+
+.form {
+	background-color: black;
+	color: white;
+	margin: 20px auto;
+	padding: 15px 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid #CCC;
+}
+
+#col-hours {
+	width:60px;
+}
+
+#col-tasks {
+	width:288px
+}
+
+thead th {
+	background-color: black;
+	color: white;
+	border: 1px solid black;
+}
+
+tr {
+	margin: 0;
+	padding: 0;
+}
+
+tr:nth-child(even) {
+	background: #EFF0F1;
+}
+
+tr:nth-child(odd) {
+	background: #FFF;
+}
+
+td {
+	text-align: center;
+}

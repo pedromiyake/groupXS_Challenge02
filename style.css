@@ -20,6 +20,7 @@ main {
 
 table {
 	border-collapse: collapse;
+	width: 348px;
 }
 
 table, th, td {

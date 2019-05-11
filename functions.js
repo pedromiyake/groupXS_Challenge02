@@ -65,6 +65,8 @@ const setTaskInEachRow = () => {
 	});		
 }
 
+
+// CORRIGIR
 const setStartingColumn = () => {
 	for(i = 0; i < tasksArr.length; i++) {
 		let startingColumn = 0;
@@ -104,6 +106,7 @@ const buildTableArr = () => {
 		}
 		tableArr.push(rowArr);
 	}
+	console.log(taskInEachRow);
 	for(k = 0; k < tasksArr.length; k++) {
 		for(i = 0; i < tableArr.length; i++) {
 			for(j = 0; j < maxNumColumns; j++) {
@@ -115,135 +118,25 @@ const buildTableArr = () => {
 
 const displaySchedule = () => {
 
-	//set column group
 	colGroup = '';
 	for(i = 0; i < maxNumColumns; i++) {
 		colGroup += '<col>';
 	}
 	$("#col-tasks").html(colGroup);
-
+	$("#date-today-weekday").attr("colspan", maxNumColumns);
 
 	for(i = 0; i < tableArr.length; i++) {
-		$("#row-" + i).html("");
+		//$("#row-" + i).html("");
 		rowContent = '<td>' + TIME_SPAN[i] + '</td>';
 		for(j = 0; j < maxNumColumns; j++) {
-			if(tableArr[i][j] = '-') rowContent += '<td class="no-border"></td>';
-			else {
-				rowContent += '<td class="no-border" style="background-color: ' + tasksArr[tableArr[i][j]][3] + ';"></td>';
+			console.log(i, j, tableArr[i][j]);
+			if(tableArr[i][j] == '-') {
+				rowContent += '<td class="no-border"></td>';
+			} else {
+				rowContent += '<td class="no-border" style="background-color:' + tasksArr[tableArr[i][j]][2] + ';"></td>';
 			}
 		}
 		$("#row-" + i).html(rowContent);
 	}
 
 }
-
-
-// const displaySchedule = () => {
-// 	for(i= 0; i < TIME_SPAN.length; i++) {
-// 		$("#row-" + i).html("");
-// 		let innerTable = "";
-
-// 		if(taskInEachRow[i].length > 0) {
-// 			let numColumns = 0;
-// 			//loop for each table row
-// 			for(j= 0; j < taskInEachRow[i].length; j++) {
-// 				if(tasksArr[ taskInEachRow[i][j] ][4] > numColumns) numColumns = tasksArr[ taskInEachRow[i][j] ][4];
-// 			}
-// 			for(j=0; j < numColumns; J++) {
-// 				innerTable += '<td style="background-color: ' + 
-// 				 + '"></td>';
-// 			}
-// 			innerTable = '<table class="nested-table"><tr>' + innerTable + '</tr></table>';
-// 		}
-// 		$("#row-" + i).html(innerTable);
-
-// 	}
-// }
-
-
-
-// const calcNumOfTasksPerRow = () => {
-// 	for(i = 0; i < taskInEachRow.length; i++){
-// 		numOfTasksPerRow[i] = taskInEachRow[i].length;
-// 	}
-// }
-
-
-// const setEndColumn = () => {
-// 	//transform tasks in each row => starting column of each task
-// 	let startColumnEachTask = [];
-// 	for(i=0; i<taskInEachRow.length; i++) {
-// 		let row = [];
-// 		for(j=0; j<taskInEachRow[i].length; j++) {
-// 			row.push(tasksArr[taskInEachRow[i]][3]);
-// 		}		
-// 		startColumnEachTask.push(row);
-// 	}
-// 	console.log(startColumnEachTask);
-// }
-
-
-// calc colspan for each task
-// cacl rowspan for each task
-
-
-
-
-
-// ==== HYPOTHESES =============================
-
-
-const findMaxNumSharedColumns = () => {
-	for(i = 0; i < tasksArr.length; i++) {
-		let maxSharedCol = 0;
-		for(j = 0; j < taskInEachRow.length; j++) {
-			if(taskInEachRow[j].indexOf(i) >= 0 && taskInEachRow[j].length > maxSharedCol) maxSharedCol = taskInEachRow[j].length;
-		}
-		tasksArr[i][4] = maxSharedCol;
-	}
-}
-
-// const displaySchedule = () => {
-// 	for(i= 0; i < TIME_SPAN.length; i++) {
-// 		$("#row-" + i).html("");
-// 		let innerTable = "";
-
-// 		if(taskInEachRow[i].length > 0) {
-// 			let numColumns = 0;
-// 			//loop for each table row
-// 			for(j= 0; j < taskInEachRow[i].length; j++) {
-// 				if(tasksArr[ taskInEachRow[i][j] ][4] > numColumns) numColumns = tasksArr[ taskInEachRow[i][j] ][4];
-// 			}
-// 			for(j=0; j < numColumns; J++) {
-// 				innerTable += '<td style="background-color: ' + 
-// 				 + '"></td>';
-// 			}
-// 			innerTable = '<table class="nested-table"><tr>' + innerTable + '</tr></table>';
-// 		}
-// 		$("#row-" + i).html(innerTable);
-
-// 	}
-// }
-
-// const displaySchedule2 = () => {
-// 	for(i= 0; i < TIME_SPAN.length; i++) {
-// 		$("#row-" + i).html("");
-// 		let innerTable = "";
-
-// 		if(taskInEachRow[i].length > 0) {
-// 			let numColumns = 0;
-// 			//loop for each table row
-// 			for(j= 0; j < taskInEachRow[i].length; j++) {
-// 				if(tasksArr[ taskInEachRow[i][j] ][4] > numColumns) numColumns = tasksArr[ taskInEachRow[i][j] ][4];
-// 			}
-// 			for(j=0; j < numColumns; J++) {
-// 				innerTable += '<td style="background-color: ' + 
-// 				 + '"></td>';
-// 			}
-// 			innerTable = '<table class="nested-table"><tr>' + innerTable + '</tr></table>';
-// 		}
-// 		$("#row-" + i).html(innerTable);
-
-// 	}
-// }
-

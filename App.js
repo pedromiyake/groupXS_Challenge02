@@ -6,7 +6,8 @@ $(document).ready(function(){
 		setDropDownTimeEnd($( "#time-start" ).children( "option:selected" ).val());
 	});
 
-	//Calcular tarifas para cada plano on button click
+	$( "#add-task" ).
+
 	$( "#add-task" ).click( () => {
 		let newTask = [$( "#time-start" ).val(), $( "#time-end" ).val(), $( "#task-color" ).val()];
 		taskInEachRow = [[], [], [], [],

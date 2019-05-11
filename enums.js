@@ -18,6 +18,4 @@ let taskInEachRow = [[], [], [], [],
 					[], [], [], [],
 					[], [], [],];
 
-let numOfTasksPerRow = [];
-
 let maxNumColumns = 0;

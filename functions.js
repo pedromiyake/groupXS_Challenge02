@@ -1,5 +1,3 @@
-//get date today
-
 const setDropDownTimeStart = () => {
 	for(var i = 0; i < TIME_SPAN.length; i++){
 		var option = new Option(TIME_SPAN[i], TIME_SPAN[i]);
@@ -27,7 +25,7 @@ const checkInputFields = (task) => {
 	return true;
 }
 
-const pushTaksToTasksArr = (task) => {
+const addTaskToTasksArr = (task) => {
 	if(tasksArr.length == 0 ) {
 		tasksArr.push(task);
 		return;
@@ -65,29 +63,6 @@ const setTaskInEachRow = () => {
 	});		
 }
 
-
-// CORRIGIR
-const setStartingColumn = () => {
-	for(i = 0; i < tasksArr.length; i++) {
-		let startingColumn = 0;
-		for(j = 0; j < taskInEachRow.length; j++) {
-			if(taskInEachRow[j].indexOf(i) > startingColumn) startingColumn = taskInEachRow[j].indexOf(i);
-		}
-		tasksArr[i][3] = startingColumn;
-	}
-}
-
-const setStartAndEndRows = () => {
-	let startingColumn = 0;
-	for(i = 0; i < tasksArr.length; i++) {
-		for(j = 0; j < taskInEachRow.length; j++) {
-			if(taskInEachRow[j].indexOf(i) > startingColumn) startingColumn = taskInEachRow[j].indexOf(i);
-		}
-		tasksArr[i][4] = TIME_SPAN.indexOf(tasksArr[i][0]);
-		tasksArr[i][5] = TIME_SPAN.indexOf(tasksArr[i][1]) - 1;
-	}
-}
-
 const findMaxNumColumns = () => {
 	maxNumColumns = 0;
 	for(i = 0; i < tasksArr.length; i++) {
@@ -97,27 +72,64 @@ const findMaxNumColumns = () => {
 	}
 }
 
-const buildTableArr = () => {
+const createTableArr = () => {
 	tableArr = [];
-	for(i = 0; i < taskInEachRow.length; i++) {
-		let rowArr = []; 
-		for(j = 0; j < maxNumColumns; j++) {
-			rowArr.push('-');
-		}
-		tableArr.push(rowArr);
-	}
-	console.log(taskInEachRow);
+	for(i = 0; i < TIME_SPAN.length; i++) { 
+		row = [];
+		for(j = 0; j < maxNumColumns; j++) { 
+			row.push('-');
+		}	
+		tableArr.push(row);
+	}	
+}
+
+const populateTableArr = () => {
 	for(k = 0; k < tasksArr.length; k++) {
-		for(i = 0; i < tableArr.length; i++) {
-			for(j = 0; j < maxNumColumns; j++) {
-				if(j == tasksArr[k][3] && i >= tasksArr[k][4]  && i <= tasksArr[k][5]) tableArr[i][j] = k;
+		let tableArrCol = 0;
+		let taskColumnStart = 0;
+		while(tableArrCol < maxNumColumns) {
+			let taskRowStart = TIME_SPAN.indexOf(tasksArr[k][0]);
+			let taskRowEnd = TIME_SPAN.indexOf(tasksArr[k][1]);
+			let countFreeSpaces = 0;
+			for(i = taskRowStart; i < taskRowEnd; i++) {
+				if(tableArr[i][tableArrCol] == '-') countFreeSpaces +=1;
+			}
+			if(countFreeSpaces == (taskRowEnd - taskRowStart)) {
+				for(i = taskRowStart; i < taskRowEnd; i++) {
+					tableArr[i][tableArrCol] = k;
+				}
+				taskColumnStart = tableArrCol;
+				tableArrCol = maxNumColumns;
+			} else {
+				tableArrCol += 1;
 			}
 		}
+		tasksArr[k][3] = taskColumnStart;
+	}
+}
+
+const ajustColumnsWidth = () => {
+	for(k = 0; k < tasksArr.length; k++) {
+		let taskRowStart = TIME_SPAN.indexOf(tasksArr[k][0]);
+		let taskRowEnd = TIME_SPAN.indexOf(tasksArr[k][1]);
+		let taskColumnStart = tasksArr[k][3];
+		let countFreeSpaces = 0;
+		while(taskColumnStart < maxNumColumns - 1) {
+			for(i = taskRowStart; i < taskRowEnd; i++) {
+				if(tableArr[i][taskColumnStart + 1] == '-') countFreeSpaces += 1;
+			}
+			if(countFreeSpaces != (taskRowEnd - taskRowStart)) break;
+			for(i = taskRowStart; i < taskRowEnd; i++) {
+				tableArr[i][taskColumnStart + 1] = k;
+				countFreeSpaces = 0;
+			}
+			taskColumnStart += 1;
+		}
+
 	}
 }
 
 const displaySchedule = () => {
-
 	colGroup = '';
 	for(i = 0; i < maxNumColumns; i++) {
 		colGroup += '<col>';
@@ -126,10 +138,8 @@ const displaySchedule = () => {
 	$("#date-today-weekday").attr("colspan", maxNumColumns);
 
 	for(i = 0; i < tableArr.length; i++) {
-		//$("#row-" + i).html("");
 		rowContent = '<td>' + TIME_SPAN[i] + '</td>';
 		for(j = 0; j < maxNumColumns; j++) {
-			console.log(i, j, tableArr[i][j]);
 			if(tableArr[i][j] == '-') {
 				rowContent += '<td class="no-border"></td>';
 			} else {
@@ -138,5 +148,12 @@ const displaySchedule = () => {
 		}
 		$("#row-" + i).html(rowContent);
 	}
+}
 
+const returnDate = () => {
+	let date = new Date();
+	var day = date.getDate();	
+	var month = date.getMonth()+1;
+	let year = date.getFullYear();
+	return (day<10 ? '0' : '') + day + '.' + (month<10 ? '0' : '') + month + '.' + year;
 }

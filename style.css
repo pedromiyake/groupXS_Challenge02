@@ -19,10 +19,12 @@ main {
 }
 
 table {
-  border-collapse: collapse;
+	border-collapse: collapse;
 }
 
 table, th, td {
+	margin: 0;
+	padding: 0;	
 	border: 1px solid #CCC;
 }
 
@@ -55,4 +57,8 @@ tr:nth-child(odd) {
 
 td {
 	text-align: center;
+}
+
+.no-border {
+	border: none;
 }

@@ -9,11 +9,30 @@ $(document).ready(function(){
 	//Calcular tarifas para cada plano on button click
 	$( "#add-task" ).click( () => {
 		let newTask = [$( "#time-start" ).val(), $( "#time-end" ).val(), $( "#task-color" ).val()];
-
+		taskInEachRow = [[], [], [], [],
+							[], [], [], [],
+							[], [], [], [],
+							[], [], [], [],
+							[], [], [], [],
+							[], [], [], [],
+							[], [], [],];
 		if(checkInputFields(newTask)) {
+			//create arrays of tasks
 			pushTaksToTasksArr(newTask);
-			setNumConflictingTasks();
+			setTaskInEachRow();
+			console.log(taskInEachRow);
+			setStartingColumn();
+			setStartAndEndRows()
 			console.log(tasksArr);
+			findMaxNumColumns();
+			console.log(maxNumColumns);
+			// calculate variables for table design
+			
+			buildTableArr();
+			console.log(tableArr);
+			displaySchedule();
+
+
 		};
 	});
 

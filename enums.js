@@ -6,6 +6,8 @@ const TIME_SPAN = ["07:00", "07:30", "08:00", "08:30",
 					"17:00", "17:30", "18:00", "18:30",
 					"19:00", "19:30", "20:00",];
 
+let tableArr = [];
+
 let tasksArr = [];
 
 let taskInEachRow = [[], [], [], [],
@@ -15,3 +17,7 @@ let taskInEachRow = [[], [], [], [],
 					[], [], [], [],
 					[], [], [], [],
 					[], [], [],];
+
+let numOfTasksPerRow = [];
+
+let maxNumColumns = 0;
